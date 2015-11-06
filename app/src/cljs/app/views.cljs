@@ -1,7 +1,21 @@
 (ns app.views
-    (:require [re-frame.core :as re-frame]))
+  (:require [re-frame.core :as re-frame]))
 
 ;; --------------------
+(defn color-component
+  "color-component returns a div, 
+   with the themeface name, a preview span element,
+   and a facecolor input."
+  [facename facecolor]
+  (let [color (re-frame/subscribe facecolor)]
+    (fn []
+      [:div.colors.row
+       [:label.col-xs-6.offset-1 (str facename)]
+       [:span.colorpreview.col-xs-1.offset-1
+        {:style {:color @color}}]
+       [:input.col-xs-3.offset-0.pull-right
+        {:required "" :colorpicker ""}]])))
+
 (defn home-panel []
   (let [name (re-frame/subscribe [:name])]
     (fn []

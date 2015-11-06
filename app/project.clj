@@ -16,7 +16,8 @@
   :cljsbuild {:builds [{:id "dev"
                         :source-paths ["src/cljs"]
 
-                        :figwheel {:on-jsload "app.core/mount-root"}
+                        :figwheel {:on-jsload "app.core/mount-root"
+                                   :nrepl-port 7888}
 
                         :compiler {:main app.core
                                    :output-to "resources/public/js/compiled/app.js"
