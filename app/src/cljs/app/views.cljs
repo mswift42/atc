@@ -6,21 +6,27 @@
   "color-component returns a div, 
    with the themeface name, a preview span element,
    and a facecolor input."
-  [facename facecolor]
-  (let [color (re-frame/subscribe facecolor)]
-    (fn []
-      [:div.colors.row
-       [:label.col-xs-6.offset-1 (str facename)]
-       [:span.colorpreview.col-xs-1.offset-1
-        {:style {:color @color}}]
-       [:input.col-xs-3.offset-0.pull-right
-        {:required "" :colorpicker ""}]])))
+  [facename facecolor ]
+  [:div.colors.mdl-grid
+   [:label.mdl-cell.mdl--4-col (str facename)]
+   [:span.colorpreview.mdl-cell.mdl--2-col
+    {:style {:background-color facecolor}}]
+   [:input.mdl-cell.mdl--4-col {:type "text"}
+    ]])
+
+
+
 
 (defn home-panel []
-  (let [name (re-frame/subscribe [:name])]
+  (let [face (re-frame/subscribe [:theme])]
     (fn []
-      [:div (str "Hello from " @name ". This is the Home Page.")
-       [:div [:a {:href "#/about"} "go to About Page"]]])))
+      [:div (str "Hello from " (:mainbg @face) ". This is the Home Page.")
+       [color-component "mainbg" (:mainfg @face)]
+       [color-component "comment" (:comment @face)]
+       [:div [:a {:href "#/about"} "go to About Page"]]]
+      ;; (color-component "mainbg" [:mainbg])
+      
+      )))
 
 (defn about-panel []
   (fn []
